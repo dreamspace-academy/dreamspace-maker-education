@@ -1,14 +1,42 @@
-<html lang="en" dir="ltr">
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Maker Education</title>
+
+<title>DreamSpace Partnership Map</title>
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="style.css">
+	  <script src="script.js"></script>
+
 </head>
 
 <body>
-  <h1>DreamSpace Academy</h1>
-  <h2>Maker Education</h2>
-  <h2>Testing CI/CD</h2>
+
+<h1>DreamSpace Partnership Map</h1>
+
+<div id="map"></div>
+
+<div id="tooltip">
+  <img src="img_1.jpg" style='width:100px; height:100px;'>
+  Name: <span id="name" class="info"></span><br> 
+  Nametype: <span id="nametype" class="info"></span><br>
+  Fall: <span id="fall" class="info"></span><br> 
+  Mass: <span id="mass" class="info"></span><br>  
+  Recclass: <span id="reclass" class="info"></span><br>  
+  Reclat: <span id="reclat" class="info"></span><br> 
+  Reclong: <span id="reclong" class="info"></span><br> 
+  Year: <span id="year" class="info"></span>
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js'></script>
+<script src='https://d3js.org/topojson.v1.js'></script>
+
+<script src="script.js"></script>
+
+
 </body>
 
 </html>
