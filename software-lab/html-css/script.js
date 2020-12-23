@@ -82,6 +82,7 @@ $(document).ready(function() {
       
       //Add Event Listeners | mouseover
         .on('mouseover', function(d) {
+		  $(this).css('cursor','pointer');
           d3.select(this).style('fill', 'black'); 
           d3.select('#name').text(d.properties.name);
           d3.select('#Country').text(d.properties.country);
