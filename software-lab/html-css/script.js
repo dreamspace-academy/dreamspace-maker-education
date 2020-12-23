@@ -50,12 +50,7 @@ $(document).ready(function() {
       var hue = 0; //create the circles
       
       // we will pass our data (the TopoJSON) as an argument, then create SVG elements using a classic D3 append. Selecting all paths, the TopoJSON is bound in the data method. From here, we can perform work on each element.
-      
-      
-      locations.map(function(d) {  // Create an object for holding dataset
-        hue += 0.36                // Create property for each circle, give it value from color
-        d.color = 'hsl(' + hue + ', 100%, 50%)';
-      });
+     
       
       // Classic D3... Select non-existent elements, bind the data, append the elements, and apply attributes
       g.selectAll('circle')
@@ -73,13 +68,13 @@ $(document).ready(function() {
           }
         })
         .attr('r', function(d) {
-          if (d.properties.mass) {
-            return Math.pow(parseInt(d.properties.mass), 1 / 9);
+          if (d.properties.cricle_size) {
+            return d.properties.cricle_size;
           }
         })
         .style('fill', function(d) {
         //Use the Color Function to set the Fill Value for each circle
-          return d.color;
+          return d.properties.cricle_color;
         })
       
       //Next, we need to write two pieces of code, one that listens for when the value of the tooltip changes, and one that updates the SVG elements.
@@ -89,13 +84,8 @@ $(document).ready(function() {
         .on('mouseover', function(d) {
           d3.select(this).style('fill', 'black'); 
           d3.select('#name').text(d.properties.name);
-          d3.select('#nametype').text(d.properties.nametype);
-          d3.select('#fall').text(d.properties.fall);
-          d3.select('#mass').text(d.properties.mass);
-          d3.select('#recclass').text(d.properties.recclass);
-          d3.select('#reclat').text(d.properties.reclat);
-          d3.select('#reclong').text(d.properties.reclong);
-          d3.select('#year').text(d.properties.year);
+          d3.select('#Country').text(d.properties.country);
+		  d3.select('#logopath').attr('src', d.properties.logo_path);	   
           d3.select('#tooltip')
             .style('left', (d3.event.pageX + 20) + 'px')
             .style('top', (d3.event.pageY - 80) + 'px')
@@ -104,10 +94,14 @@ $(document).ready(function() {
         })
         //Add Event Listeners | mouseout
         .on('mouseout', function(d) { 
-          d3.select(this).style('fill', d.color);
+          d3.select(this).style('fill', d.properties.cricle_color);
           d3.select('#tooltip')
             .style('display', 'none');
-        });
+        })
+		.on('click',function(d){
+			var win = window.open(d.properties.link, '_blank');
+			win.focus();
+		});
     });
   });
 });
