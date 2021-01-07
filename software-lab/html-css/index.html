@@ -5,20 +5,62 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
-    
-	<link rel="stylesheet" href="style.css">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">  
 	<link rel="stylesheet" href="openlayers/ol.css">
+	<link rel="stylesheet" href="style.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style.css">
 	  
 </head>
 
 <body>
 
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			<div class="custom-menu">
+				<button type="button" id="sidebarCollapse" class="btn btn-primary">
+		  <i class="fa fa-bars"></i>
+		  <span class="sr-only">Toggle Menu</span>
+		</button>
+	</div>
+	<h1><a href="index.html" class="logo">Search Options</a></h1>
 
-<div id="js-map" class="map"></div>
+	<ul class="list-unstyled components mb-5">
+	  
+	<!-- Page Content  
+	  <li class="active">
+		<a href="#"><span class="fa fa-home mr-3"></span>Guna</a>
+	  </li>
+	  -->
+	</ul>
+
+	</nav>
 
 
-<script src="script.js"></script>
+	<!-- Page Content  -->
+  <div id="content" class="p-4 p-md-5 pt-5">
+	
+		<div id="js-map" class="map" style="border: 1px solid black;">
+
+	</div>
+	
+  </div>
+
+	</div>
+
+	
+
+
 <script src="openlayers/ol.js"></script>
+<script src="script.js"></script>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
 
 
 </body>
