@@ -49,95 +49,108 @@ function init(){
 		})
 	];
 
-	var layer_1 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673])),				
+
+
+	fetch('./data.json').then(response => {
+		return response.json();
+	}).then(data => {
+
+		var len = data.length;
+
+		for(a=0;a<len;a++){
+
+			var layer = new ol.layer.Vector({
+				source: new ol.source.Vector({
+					features: [
+						new ol.Feature({
+							id:data[a]['id'],
+							geometry: new ol.geom.Point(ol.proj.fromLonLat([data[a]['longitude'],data[a]['latitude']])),				
+						})
+					]
 				})
-			]
-		})
+			});
+
+			layer.setStyle(style1);
+			map.addLayer(layer);
+		}
+
+	}).catch(err => {
+		
 	});
 
-	var layer_2 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([80.7718, 7.8731])),				
-				})
-			]
+	map.on("click", function(e) {
+		map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+
+			var selected_feature = feature.values_.id;
+
+			fetch('./data.json').then(response => {
+				return response.json();
+
+			}).then(data => {
+		
+				var len = data.length;
+		
+				for(a=0;a<len;a++){
+				
+					var company_id = data[a]['id']
+
+					if(company_id == selected_feature){
+
+						document.getElementById("info_box").style.display="block";
+						document.getElementById("info_box_heading").innerHTML = data[a]['company_name']
+						document.getElementById("info_box_text").innerHTML = data[a]['description']
+						document.getElementById("info_box_logo").src = data[a]['logo']
+						document.getElementById("info_box_link").href = data[a]['website_link']
+						document.getElementById("info_box_link").innerHTML = data[a]['website_link']
+					}
+				 
+				}
+		
+			}).catch(err => {
+				
+			});
+		
 		})
 	});
-
-	var layer_3 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([95.7129, 37.0902])),				
-				})
-			]
-		})
-	});
-
-	var layer_4 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([106.3468, 56.1304])),				
-				})
-			]
-		})
-	});
-
-
-	var layer_5 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([133.7751, 25.2744])),				
-				})
-			]
-		})
-	});
-
-
-	var layer_6 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([10.4515, 51.1657])),				
-				})
-			]
-		})
-	});
-
-	var layer_7 = new ol.layer.Vector({
-		source: new ol.source.Vector({
-			features: [
-				new ol.Feature({
-					geometry: new ol.geom.Point(ol.proj.fromLonLat([13.4050, 52.5200])),				
-				})
-			]
-		})
-	});
-
-	layer_1.setStyle(style1);
-	layer_2.setStyle(style1);
-	layer_3.setStyle(style1);
-	layer_4.setStyle(style1);
-	layer_5.setStyle(style1);
-	layer_6.setStyle(style1);
-	layer_7.setStyle(style1);	
 	
-	map.addLayer(layer_1);
-	map.addLayer(layer_2);
-	map.addLayer(layer_3);
-	map.addLayer(layer_4);
-	map.addLayer(layer_5);
-	map.addLayer(layer_6);
-	map.addLayer(layer_7);
-	
+	var tooltip = document.getElementById('tooltip_1');
+
+	var overlay = new ol.Overlay({
+		element: tooltip,
+		offset: [10, 0],
+		positioning: 'bottom-left'
+	});
+
+	map.addOverlay(overlay);
+
+	function displayTooltip(evt) {
+		
+		var pixel = evt.pixel;
+		var feature = map.forEachFeatureAtPixel(pixel, function(feature) {
+			return feature;
+		});
+		
+		tooltip.style.display = feature ? '' : 'none';
+
+		var selected_feature = feature.values_.id;
+
+		if (feature) {
+			overlay.setPosition(evt.coordinate);
+			//tooltip.innerHTML = "guna";
+		}
+
+		var pixel = map.getEventPixel(evt.originalEvent);
+		var hit = map.hasFeatureAtPixel(pixel);
+		map.getViewport().style.cursor = hit ? 'pointer' : '';
+
+		
+	};
+
+	map.on('pointermove', displayTooltip);
 
 
-	
+
+
+
+
 }
