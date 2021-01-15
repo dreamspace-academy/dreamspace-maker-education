@@ -124,18 +124,51 @@ function init(){
 	map.addOverlay(overlay);
 
 	function displayTooltip(evt) {
+
+		var selected_feature = "";
+
+		map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+
+			selected_feature = feature.values_.id;
+			
+		})
 		
 		var pixel = evt.pixel;
 		var feature = map.forEachFeatureAtPixel(pixel, function(feature) {
 			return feature;
 		});
-		
+	
 		tooltip.style.display = feature ? '' : 'none';
 
-		var selected_feature = feature.values_.id;
-
 		if (feature) {
+
 			overlay.setPosition(evt.coordinate);
+
+			fetch('./data.json').then(response => {
+				return response.json();
+
+			}).then(data => {
+		
+				var len = data.length;
+				
+				for(b=0;b<len;b++){
+
+					var company_id = data[b]['id'];
+
+					if(company_id == selected_feature){
+
+						document.getElementById("tooltip_heading").innerHTML = data[b]['company_name']
+						document.getElementById("tooltip_logo").src = data[b]['logo']
+
+					}
+
+					
+				}
+		
+			}).catch(err => {
+				
+			});
+			
 			//tooltip.innerHTML = "guna";
 		}
 
